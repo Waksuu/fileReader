@@ -107,7 +107,7 @@ namespace fileReaderWPF
                 System.Windows.MessageBox.Show(folderPath);
                 foreach (string file in Directory.GetFiles(@folderPath))
                 {
-                    if (System.IO.Path.GetExtension(file) == ".odt")
+                    if (System.IO.Path.GetExtension(file) == ".txt")
                     {
                         vilableFilesToRead.Add(file);
                     }
