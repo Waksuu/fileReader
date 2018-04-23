@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Threading;
 
+
 namespace fileReaderWPF
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace fileReaderWPF
     {
         private string folderPath;
         private List<string> vilableFilesToRead = new List<string>();
-        
+        List<PhraseLocation> location = new List<PhraseLocation>();
         public MainWindow()
         {
 
@@ -40,14 +41,14 @@ namespace fileReaderWPF
         private List<PhraseLocation> phraseLocation()
         {
              
-            var location = new List<PhraseLocation>();
+           
             this.Dispatcher.Invoke(() =>
             {
 
                 List<string> lines = new List<string>();
                
                 string line;
-
+                bool contains;
                 string regexText = phraseTxt.Text;
 
                 int lineCount = 0;
@@ -61,11 +62,11 @@ namespace fileReaderWPF
                        
                         
                         lineCount++;
-                        
-                        bool contains = Regex.IsMatch(line, @"\b" + regexText + @"\b");
+
+                        contains = Regex.IsMatch(line, @"\b" + regexText + @"\b");
                         if (contains)
                         {
-                            location.Add(new PhraseLocation { Line = lineCount, Path = item });
+                            location.Add(new PhraseLocation { Line = lineCount, Path = item, Sentence = line });
                             
                         }
                     }
@@ -125,5 +126,60 @@ namespace fileReaderWPF
             //    System.Windows.MessageBox.Show($"Path: {word.Path}\nLine: {word.Line}");
             //}
         }
+     
+
+    
+
+        private void dataGridViev_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int i = 0;
+            List<string> phraseIntoList = new List<string>();
+            richTextBoxRun.Text = "";
+            String line = "";
+            line = location[dataGridViev.SelectedIndex].Sentence;
+            richTextBoxRun.Text = line;
+            //phraseIntoList = phraseTxt.Text.Split(' ').ToList();
+
+            //IEnumerable<TextRange> wordRanges = GetAllWordRanges(richTextBox1.Document);
+            //foreach (TextRange wordRange in wordRanges)
+            //{
+            //    if (i < phraseIntoList.Count)
+            //    {
+            //        if (wordRange.Text == phraseIntoList[i])
+            //        {
+            //            wordRange.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
+            //            i++;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        i = 0;
+            //    }
+            //}
+
+        }
+        //public static IEnumerable<TextRange> GetAllWordRanges(FlowDocument document)
+        //{
+        //    string pattern = @"[^\W\d](\w|[-']{1,2}(?=\w))*";
+        //    TextPointer pointer = document.ContentStart;
+        //    while (pointer != null)
+        //    {
+        //        if (pointer.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+        //        {
+        //            string textRun = pointer.GetTextInRun(LogicalDirection.Forward);
+        //            MatchCollection matches = Regex.Matches(textRun, pattern);
+        //            foreach (Match match in matches)
+        //            {
+        //                int startIndex = match.Index;
+        //                int length = match.Length;
+        //                TextPointer start = pointer.GetPositionAtOffset(startIndex);
+        //                TextPointer end = start.GetPositionAtOffset(length);
+        //                yield return new TextRange(start, end);
+        //            }
+        //        }
+
+        //        pointer = pointer.GetNextContextPosition(LogicalDirection.Forward);
+        //    }
+        //}
     }
 }

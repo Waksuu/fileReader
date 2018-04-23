@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:fileReaderWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="220" Width="500">
-    <Border Padding="10">
+        Title="MainWindow" Height="341" Width="500">
+    <Border Padding="10" VerticalAlignment="Top">
         <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -21,23 +21,35 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Button x:Name="runSeatchBtn" Margin="0 0 10 0" Content="Run search" Grid.Column="0" IsEnabled="False" Click="runSeatchBtn_Click"></Button>
                 <Button x:Name="folderSelectBtn" Margin="10 0 0 0" Content="Select folder" Grid.Column="1" x:Uid="" Click="folderSelectBtn_Click"></Button>
-                
+
             </Grid>
             <Grid Margin="0 10 0 0">
-                <DataGrid x:Name="dataGridViev" Height="105" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Path" Binding="{Binding Path=Path}" Width="3*"/>
+                <DataGrid x:Name="dataGridViev" Height="105" AutoGenerateColumns="False" MouseDoubleClick="dataGridViev_MouseDoubleClick" CanUserSortColumns="False" >
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header="Path" Binding="{Binding Path=Path}" Width="3*" />
 
                         <DataGridTextColumn Header="Line" Binding="{Binding Path=Line}" Width="*"/>
+
                     </DataGrid.Columns>
 
                 </DataGrid>
-            </Grid>
-           
 
+            </Grid>
+            <Grid Margin="0 10 0 0">
+
+
+                <RichTextBox Height="105" x:Name="richTextBox1">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run x:Name="richTextBoxRun"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+
+            </Grid>
         </StackPanel>
     </Border>
 </Window>
